@@ -20,7 +20,7 @@ const StyledCard = styled(RadixCard)<StyledCardProps>`
   background-image: url(${(props) => props.picture});
   background-size: cover;
   background-position: center;
-  width: 300px;
+  min-width: 300px;
   height: 300px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -32,6 +32,17 @@ const StyledCard = styled(RadixCard)<StyledCardProps>`
 
 const Description = styled(Text)`
   font-size: 15px;
+  color: var(--color-white);
+  display: -webkit-box;
+  -webkit-line-clamp: 2; // Number of lines you want to display
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+`;
+
+const Name = styled(Text)`
+  font-size: 30px;
   color: var(--color-white);
   display: -webkit-box;
   -webkit-line-clamp: 2; // Number of lines you want to display
@@ -79,17 +90,14 @@ const Card = ({
             "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%)",
         }}
       >
-        <Flex mb="-3" justify="start" align="center">
-          <ThumbUpDown variant={winningVote} />
-          <Text
+        <Flex mb="-2" justify="start" align="end" pr="6">
+          <ThumbUpDown
+            variant={winningVote}
             style={{
-              color: "var(--color-white)",
-              fontSize: "30px",
-              lineHeight: "normal",
+              marginBottom: "4px",
             }}
-          >
-            {name}
-          </Text>
+          />
+          <Name mb="-1">{name}</Name>
         </Flex>
         <Flex direction="column" gap="3" px="6">
           <Description>{description}</Description>
@@ -143,7 +151,7 @@ const Card = ({
             >
               <img src={thumbsUpSvg} />
             </IconButton>
-            {votes.positive}%
+            {positivePercentage.toFixed(2)}%
           </Text>
           <Text
             size="4"
@@ -159,7 +167,7 @@ const Card = ({
               right: "0",
             }}
           >
-            {votes.negative}%
+            {negativePercentage.toFixed(2)}
             <IconButton
               style={{
                 position: "relative",
