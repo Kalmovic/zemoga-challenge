@@ -7,6 +7,7 @@ import { ref, runTransaction } from "firebase/database";
 import { database } from "@/firebase"; // your Firebase configuration
 import { VoteVariant } from "@/components/atoms/voteThumbUpDown";
 import { PreviousRullingType } from "@/queries/useGetPreviousRulings";
+import { toast } from "sonner";
 
 const incrementPositiveVote = async (
   itemId: number,
@@ -82,7 +83,11 @@ export const useVoteMutation = (
 
       return { previousRullings };
     },
-    onError: (err, variables, context) => {
+    onError: (err, _, context) => {
+      console.log(err);
+      toast.error(
+        "There was an error while processing your vote. Please try again."
+      );
       queryClient.setQueryData(["previousRullings"], context?.previousRullings);
     },
     onSettled: () => {
