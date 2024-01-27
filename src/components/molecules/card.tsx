@@ -8,9 +8,10 @@ import {
 } from "@radix-ui/themes";
 import thumbsUpSvg from "@/assets/img/thumbs-up.svg";
 import thumbsDownSvg from "@/assets/img/thumbs-down.svg";
-import { VoteActions } from "./voteActions";
+import VoteActions from "./voteActions";
 import { formatDistance } from "date-fns";
 import { ThumbUpDown } from "../atoms/voteThumbUpDown";
+import React from "react";
 
 type StyledCardProps = {
   picture: string;
@@ -65,6 +66,7 @@ const Card = ({
   picture,
   lastUpdated,
   votes,
+  id,
 }: {
   name: string;
   description: string;
@@ -72,7 +74,9 @@ const Card = ({
   picture: string;
   lastUpdated: string;
   votes: { positive: number; negative: number };
+  id: string;
 }) => {
+  const [hasVoted, setHasVoted] = React.useState(false);
   const totalVotes = votes.positive + votes.negative;
   const positivePercentage = (votes.positive / totalVotes) * 100;
   const negativePercentage = (votes.negative / totalVotes) * 100;
@@ -111,10 +115,16 @@ const Card = ({
                 marginLeft: "0.5rem",
               }}
             >
-              {timeSince(lastUpdated)} in {""}
-              <Text weight="bold">{category}</Text>
+              {!hasVoted
+                ? `${timeSince(lastUpdated)} in ${" "}`
+                : "Thank you for your vote!"}
+              {!hasVoted && <Text weight="bold">{category}</Text>}
             </Text>
-            <VoteActions />
+            <VoteActions
+              cardId={id}
+              onVote={(bool) => setHasVoted(bool)}
+              hasVoted={hasVoted}
+            />
           </Flex>
         </Flex>
         <Flex
@@ -167,7 +177,7 @@ const Card = ({
               right: "0",
             }}
           >
-            {negativePercentage.toFixed(2)}
+            {negativePercentage.toFixed(2)}%
             <IconButton
               style={{
                 position: "relative",
