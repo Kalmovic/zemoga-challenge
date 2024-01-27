@@ -2,7 +2,7 @@ import { UseQueryOptions, useQuery } from "@tanstack/react-query";
 import { database } from "@/firebase";
 import { ref, onValue } from "firebase/database";
 
-type PreviousRullingType = {
+export type PreviousRullingType = {
   id: string;
   name: string;
   description: string;
