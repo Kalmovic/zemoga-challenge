@@ -1,7 +1,7 @@
 import { useMediaQuery, useReadLocalStorage } from "usehooks-ts";
 import { Text, Flex } from "@radix-ui/themes";
 import styled from "styled-components";
-import Card from "@/components/molecules/card";
+import Card from "@/components/molecules/Card";
 import { ViewEnum, ViewSelector } from "@/components/molecules/ViewSelector";
 import { useGetPreviousRullings } from "@/queries/useGetPreviousRulings";
 

@@ -1,6 +1,6 @@
 import { Button, Flex } from "@radix-ui/themes";
 import React from "react";
-import { VoteThumbUpDown } from "../atoms/voteThumbUpDown";
+import { VoteThumbUpDown } from "@/components/atoms/VoteThumbUpDown";
 import { useVoteMutation } from "@/mutations/useVote";
 import { useGetPreviousRullings } from "@/queries/useGetPreviousRulings";
 

@@ -1,4 +1,4 @@
-import { Cards } from "@/components/environments/cards";
+import { Cards } from "@/components/environments/Cards";
 
 function App() {
   return <Cards />;
