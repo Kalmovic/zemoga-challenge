@@ -1,3 +1,5 @@
+import React from "react";
+import { formatDistance } from "date-fns";
 import styled from "styled-components";
 import {
   Box,
@@ -8,17 +10,17 @@ import {
 } from "@radix-ui/themes";
 import thumbsUpSvg from "@/assets/img/thumbs-up.svg";
 import thumbsDownSvg from "@/assets/img/thumbs-down.svg";
-import VoteActions from "./voteActions";
-import { formatDistance } from "date-fns";
-import { ThumbUpDown } from "../atoms/voteThumbUpDown";
-import React from "react";
+import VoteActions from "@/components/molecules/VoteActions";
+import { ThumbUpDown } from "@/components/atoms/VoteThumbUpDown";
+import { useMediaQuery } from "usehooks-ts";
 
 type StyledCardProps = {
   picture: string;
+  mode?: "grid" | "list";
 };
 
 const StyledCard = styled(RadixCard)<StyledCardProps>`
-  background-image: url(${(props) => props.picture});
+  background-image: url(${(props) => props.mode === "grid" && props.picture});
   background-size: cover;
   background-position: center;
   min-width: 300px;
@@ -27,7 +29,7 @@ const StyledCard = styled(RadixCard)<StyledCardProps>`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: ${(props) => (props.mode === "grid" ? 1 / 1 : null)};
   .rt-CardInner {
     padding: 0;
   }
@@ -42,7 +44,7 @@ const Description = styled(Text)`
   font-size: 15px;
   color: var(--color-white);
   display: -webkit-box;
-  -webkit-line-clamp: 2; // Number of lines you want to display
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -53,11 +55,14 @@ const Name = styled(Text)`
   font-size: 30px;
   color: var(--color-white);
   display: -webkit-box;
-  -webkit-line-clamp: 2; // Number of lines you want to display
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.3;
+  @media (min-width: 767px) {
+    -webkit-line-clamp: 1;
+  }
 `;
 
 function timeSince(dateString: string) {
@@ -65,6 +70,17 @@ function timeSince(dateString: string) {
   const past = new Date(dateString);
   return formatDistance(past, now, { addSuffix: true });
 }
+
+type CardPropsType = {
+  name: string;
+  description: string;
+  category: string;
+  picture: string;
+  lastUpdated: string;
+  votes: { positive: number; negative: number };
+  id: string;
+  mode?: "grid" | "list";
+};
 
 const Card = ({
   name,
@@ -74,45 +90,95 @@ const Card = ({
   lastUpdated,
   votes,
   id,
-}: {
-  name: string;
-  description: string;
-  category: string;
-  picture: string;
-  lastUpdated: string;
-  votes: { positive: number; negative: number };
-  id: string;
-}) => {
+  mode,
+}: CardPropsType) => {
   const [hasVoted, setHasVoted] = React.useState(false);
   const totalVotes = votes.positive + votes.negative;
   const positivePercentage = (votes.positive / totalVotes) * 100;
   const negativePercentage = (votes.negative / totalVotes) * 100;
   const winningVote = positivePercentage > negativePercentage ? "up" : "down";
   const srcSet = `src/assets/img/${picture}.png 750w, src/assets/img/${picture}@2x.png 1440w`;
+  const isTablet = useMediaQuery("(max-width: 880px) and (min-width: 768px)");
+
   return (
-    <StyledCard picture={`src/assets/img/${picture}.png`}>
+    <StyledCard picture={`src/assets/img/${picture}.png`} mode={mode}>
+      {mode === "list" && (
+        <img
+          srcSet={srcSet}
+          alt=""
+          style={{
+            height: "100%",
+            transform: "scale(1.2)",
+            objectFit: "contain",
+            objectPosition: "end",
+            position: "absolute",
+            backgroundColor: "black",
+            top: "0",
+            left: "0",
+          }}
+        />
+      )}
       <Flex
         direction="column"
-        gap="3"
+        gap={mode === "list" ? "0" : "3"}
         justify="end"
         height="100%"
         style={{
+          position: "relative",
           background:
-            "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%)",
+            mode === "list"
+              ? `linear-gradient(to right, rgba(0, 0, 0, 0.00) ${
+                  isTablet ? 0 : 4
+                }%, #888 ${
+                  isTablet ? 18 : 14
+                }.79%, #666 50%, rgba(51, 51, 51, 0.60) 71.88%)`
+              : "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%)",
         }}
       >
-        <Flex mb="-2" justify="start" align="end" pr="6">
-          <ThumbUpDown
-            variant={winningVote}
+        <Flex direction={mode === "list" ? "row" : "column"}>
+          {mode === "list" ? (
+            <Flex>
+              <ThumbUpDown variant={winningVote} />
+              <Flex
+                direction="column"
+                gap={mode === "list" ? "4" : "1"}
+                justify="start"
+                align="start"
+                pr="6"
+                style={{
+                  marginLeft: mode === "list" ? "150px" : "0",
+                }}
+              >
+                <Name mb="-1">{name}</Name>
+                <Description>{description}</Description>
+              </Flex>
+            </Flex>
+          ) : (
+            <Flex direction="column">
+              <Flex align="end">
+                <ThumbUpDown
+                  variant={winningVote}
+                  style={{
+                    marginBottom: "4px",
+                  }}
+                />
+                <Name mb="-1">{name}</Name>
+              </Flex>
+              <Flex px="6">
+                <Description>{description}</Description>
+              </Flex>
+            </Flex>
+          )}
+          <Flex
+            direction="column"
+            gap="3"
+            align="end"
+            px="6"
+            mt="2"
             style={{
-              marginBottom: "4px",
+              justifyContent: mode === "list" ? "space-between" : "initial",
             }}
-          />
-          <Name mb="-1">{name}</Name>
-        </Flex>
-        <Flex direction="column" gap="3" px="6">
-          <Description>{description}</Description>
-          <Flex direction="column" gap="3" align="end">
+          >
             <Text
               size="1"
               weight="medium"
@@ -141,6 +207,7 @@ const Card = ({
             position: "relative",
             bottom: "0",
             width: "100%",
+            marginTop: mode === "list" ? "20px" : "0",
           }}
         >
           <Text
@@ -166,7 +233,7 @@ const Card = ({
                 backgroundColor: "transparent",
               }}
             >
-              <img src={thumbsUpSvg} />
+              <img src={thumbsUpSvg} alt="thumb-up" />
             </IconButton>
             {positivePercentage.toFixed(2)}%
           </Text>
@@ -194,7 +261,7 @@ const Card = ({
                 backgroundColor: "transparent",
               }}
             >
-              <img src={thumbsDownSvg} />
+              <img src={thumbsDownSvg} alt="thumb-down" />
             </IconButton>
           </Text>
           <Box
