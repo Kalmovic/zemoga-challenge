@@ -34,7 +34,6 @@ export const useGetPreviousRullings = (
   options?: Partial<UseQueryOptions<PreviousRullingType>>
 ) => {
   return useQuery({
-    staleTime: 1000 * 60 * 60 * 24,
     queryKey: ["previousRullings"],
     queryFn: fetchFromFirebase,
     ...options,
