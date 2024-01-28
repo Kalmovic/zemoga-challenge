@@ -22,12 +22,19 @@ const StyledCard = styled(RadixCard)<StyledCardProps>`
   background-size: cover;
   background-position: center;
   min-width: 300px;
+  max-width: 300px;
   height: 300px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  aspect-ratio: 1 / 1;
   .rt-CardInner {
     padding: 0;
+  }
+  @media (min-width: 768px) {
+    min-width: 100%;
+    max-width: 100%;
+    height: auto;
   }
 `;
 
