@@ -27,7 +27,29 @@ export function Cards() {
         </Text>
         {!isMobile && !isLoading && <ViewSelector />}
       </Flex>
-      {isLoading && <Text>Loading...</Text>}
+      {isLoading && (
+        <Flex
+          justify="center"
+          align="center"
+          style={{
+            backgroundColor: "var(--color-light-gray)",
+            animation: "pulse 1s infinite",
+            padding: "10px",
+            height: "290px",
+          }}
+        >
+          <Text
+            size="5"
+            weight="light"
+            style={{
+              color: "var(--color-dark-gray)",
+            }}
+            aria-label="Loading Previous Rullings"
+          >
+            Loading Previous Rullings
+          </Text>
+        </Flex>
+      )}
       {isMobile && (
         <Flex
           gap="3"
