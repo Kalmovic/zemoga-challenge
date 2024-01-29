@@ -1,11 +1,11 @@
 # Use an official base image
-FROM node:14
+FROM node:18-alpine as BUILD_IMAGE
 
 # Set the working directory in the container
-WORKDIR /usr/src/app
+WORKDIR /app/react-app
 
 # Copy package.json and package-lock.json
-COPY package*.json ./
+COPY package.json .
 
 # Install dependencies
 RUN npm install
@@ -16,8 +16,18 @@ COPY . .
 # Your app might build or transpile here
 RUN npm run build
 
-# Specify the command to run your app
-CMD [ "npm", "start" ]
+FROM node:18-alpine as PRODUCTION_IMAGE
+WORKDIR /app/react-app
 
-# Open a port for your app if it's a web server
-EXPOSE 3000
+COPY --from=BUILD_IMAGE /app/react-app/dist app/react-app/dist
+EXPOSE 8080
+
+COPY package.json .
+COPY vite.config.ts .
+
+RUN npm install typescript
+
+EXPOSE 8080
+# Specify the command to run your app
+CMD [ "npm", "run", "preview" ]
+
