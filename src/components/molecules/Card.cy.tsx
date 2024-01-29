@@ -1,7 +1,7 @@
 import { mount } from "cypress/react18";
 import { Theme } from "@radix-ui/themes";
 import Card from "./Card";
-import kanye from "@/assets/img/kanye.png";
+import kanye from "../../assets/img/kanye.png";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 describe("<Cards />", () => {

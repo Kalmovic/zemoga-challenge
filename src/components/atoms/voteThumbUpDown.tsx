@@ -1,6 +1,6 @@
 import { Flex, IconButton } from "@radix-ui/themes";
-import thumbsUpSvg from "@/assets/img/thumbs-up.svg";
-import thumbsDownSvg from "@/assets/img/thumbs-down.svg";
+import thumbsUpSvg from "../../assets/img/thumbs-up.svg";
+import thumbsDownSvg from "../../assets/img/thumbs-down.svg";
 import React from "react";
 
 export type VoteVariant = "up" | "down";

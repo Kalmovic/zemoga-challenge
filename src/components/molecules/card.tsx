@@ -8,8 +8,8 @@ import {
   Card as RadixCard,
   Text,
 } from "@radix-ui/themes";
-import thumbsUpSvg from "@/assets/img/thumbs-up.svg";
-import thumbsDownSvg from "@/assets/img/thumbs-down.svg";
+import thumbsUpSvg from "@images/thumbs-up.svg";
+import thumbsDownSvg from "@images/img/thumbs-down.svg";
 import VoteActions from "@/components/molecules/VoteActions";
 import { ThumbUpDown } from "@/components/atoms/VoteThumbUpDown";
 import { useMediaQuery } from "usehooks-ts";
