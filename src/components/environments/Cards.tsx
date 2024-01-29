@@ -21,6 +21,7 @@ export function Cards() {
           style={{
             color: "var(--color-dark-gray)",
           }}
+          aria-label="Previous Rullings"
         >
           Previous Rullings
         </Text>

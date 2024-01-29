@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           },
         }}
       />
-      <Theme radius="none" accentColor="plum">
+      <Theme radius="none" accentColor="teal">
         <App />
       </Theme>
     </QueryClientProvider>

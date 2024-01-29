@@ -149,8 +149,12 @@ const Card = ({
                   marginLeft: mode === "list" ? "150px" : "0",
                 }}
               >
-                <Name mb="-1">{name}</Name>
-                <Description>{description}</Description>
+                <Name mb="-1" aria-label="Card Name">
+                  {name}
+                </Name>
+                <Description aria-label="Card Description">
+                  {description}
+                </Description>
               </Flex>
             </Flex>
           ) : (
@@ -162,10 +166,14 @@ const Card = ({
                     marginBottom: "4px",
                   }}
                 />
-                <Name mb="-1">{name}</Name>
+                <Name mb="-1" aria-label="Card Name">
+                  {name}
+                </Name>
               </Flex>
               <Flex px="6">
-                <Description>{description}</Description>
+                <Description aria-label="Card Description">
+                  {description}
+                </Description>
               </Flex>
             </Flex>
           )}
@@ -186,7 +194,9 @@ const Card = ({
                 color: "var(--color-white)",
                 textTransform: "capitalize",
                 marginLeft: "0.5rem",
+                minWidth: "150px",
               }}
+              aria-label="info"
             >
               {!hasVoted
                 ? `${timeSince(lastUpdated)} in ${" "}`
@@ -223,6 +233,7 @@ const Card = ({
               position: "absolute",
               left: "0",
             }}
+            aria-label="Positive Percentage"
           >
             <IconButton
               style={{
@@ -235,7 +246,11 @@ const Card = ({
             >
               <img src={thumbsUpSvg} alt="thumb-up" />
             </IconButton>
-            {positivePercentage.toFixed(2)}%
+            {positivePercentage.toLocaleString("en-US", {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2,
+            })}
+            %
           </Text>
           <Text
             size="4"
@@ -250,8 +265,13 @@ const Card = ({
               position: "absolute",
               right: "0",
             }}
+            aria-label="Negative Percentage"
           >
-            {negativePercentage.toFixed(2)}%
+            {negativePercentage.toLocaleString("en-US", {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2,
+            })}
+            %
             <IconButton
               style={{
                 position: "relative",

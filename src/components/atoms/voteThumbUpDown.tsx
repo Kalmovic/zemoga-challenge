@@ -14,6 +14,7 @@ export function ThumbUpDown(props: {
     <IconButton
       variant="solid"
       onClick={() => props.onClick?.(props.variant)}
+      disabled={!props.onClick}
       style={{
         boxSizing: "content-box",
         width: "30px",
@@ -23,7 +24,15 @@ export function ThumbUpDown(props: {
             ? "rgba(var(--color-green-positive), 0.8)"
             : "rgba(var(--color-yellow-negative), 0.8)",
         ...props.style,
+        cursor: `${() => !props.onClick && "cursor: pointer;"}`,
       }}
+      aria-label={
+        !props.onClick
+          ? `${props.variant} disabled`
+          : props.variant === "up"
+          ? "Vote Button Positive"
+          : "Vote Button Negative"
+      }
     >
       <img src={props.variant === "up" ? thumbsUpSvg : thumbsDownSvg} />
     </IconButton>

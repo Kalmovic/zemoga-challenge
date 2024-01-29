@@ -36,6 +36,7 @@ const VoteActions = ({
 
   const handleVote = () => {
     if (hasVoted) {
+      setSelectedVote(null);
       onVote(false);
       return;
     }
@@ -54,6 +55,7 @@ const VoteActions = ({
       <Button
         disabled={!selectedVote}
         onClick={handleVote}
+        aria-label={hasVoted ? "Vote Again" : "Vote Now"}
         style={{
           backgroundColor: "var(--color-dark-background)",
           color: "var(--color-light-gray)",
