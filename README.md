@@ -4,7 +4,7 @@
 
 This project tracks the sentiment of their users on trending and controversial people from different fields, including politics, business, media and entertainment, etc
 
-Live app: https://zemoga-challenge.vercel.app/
+Live app: https://zemoga-thumb.netlify.app/
 
 ## Technologies
 
