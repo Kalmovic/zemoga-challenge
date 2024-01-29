@@ -8,11 +8,28 @@ import {
   Card as RadixCard,
   Text,
 } from "@radix-ui/themes";
-import thumbsUpSvg from "@images/thumbs-up.svg";
-import thumbsDownSvg from "@images/img/thumbs-down.svg";
+import thumbsUpSvg from "../../assets/img/thumbs-up.svg";
+import thumbsDownSvg from "../../assets/img/thumbs-down.svg";
 import VoteActions from "@/components/molecules/VoteActions";
 import { ThumbUpDown } from "@/components/atoms/VoteThumbUpDown";
 import { useMediaQuery } from "usehooks-ts";
+import kanyeImg from "@images/kanye.png";
+import markImg from "@images/mark.png";
+import cristinaImg from "@images/cristina.png";
+import malalaImg from "@images/malala.png";
+import elonImg from "@images/elon.png";
+import greta from "@images/greta.png";
+
+const images: {
+  [key: string]: string;
+} = {
+  kanye: kanyeImg,
+  mark: markImg,
+  cristina: cristinaImg,
+  malala: malalaImg,
+  elon: elonImg,
+  greta: greta,
+};
 
 type StyledCardProps = {
   picture: string;
@@ -97,14 +114,14 @@ const Card = ({
   const positivePercentage = (votes.positive / totalVotes) * 100;
   const negativePercentage = (votes.negative / totalVotes) * 100;
   const winningVote = positivePercentage > negativePercentage ? "up" : "down";
-  const srcSet = `src/assets/img/${picture}.png 750w, src/assets/img/${picture}@2x.png 1440w`;
+  const imageSrc = images[picture];
   const isTablet = useMediaQuery("(max-width: 880px) and (min-width: 768px)");
 
   return (
-    <StyledCard picture={`src/assets/img/${picture}.png`} mode={mode}>
+    <StyledCard picture={imageSrc} mode={mode}>
       {mode === "list" && (
         <img
-          srcSet={srcSet}
+          srcSet={imageSrc}
           alt=""
           style={{
             height: "100%",
