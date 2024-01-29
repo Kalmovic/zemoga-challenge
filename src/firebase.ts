@@ -7,14 +7,14 @@ import { getDatabase } from "firebase/database";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const firebaseConfig = {
-  apiKey: process.env.VITE_FIREBASE_API_KEY,
-  authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.VITE_FIREBASE_DATABASE_URL,
-  projectId: process.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.VITE_FIREBASE_APP_ID,
-  measurementId: process.env.VITE_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyCM8eHpcUnuwCmZabG22dotv5lyvIDn7Hw",
+  authDomain: "zemoga-rule-of-thumb.firebaseapp.com",
+  databaseURL: "https://zemoga-rule-of-thumb-default-rtdb.firebaseio.com",
+  projectId: "zemoga-rule-of-thumb",
+  storageBucket: "zemoga-rule-of-thumb.appspot.com",
+  messagingSenderId: "623611041742",
+  appId: "1:623611041742:web:85b7bcb2188458b30afd9f",
+  measurementId: "G-ZHSEMEGC0V",
 };
 
 // Initialize Firebase
