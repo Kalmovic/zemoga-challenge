@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { ref, runTransaction } from "firebase/database";
 import { database } from "@/firebase"; // your Firebase configuration
-import { VoteVariant } from "@/components/atoms/voteThumbUpDown";
+import { VoteVariant } from "@/components/atoms/VoteThumbUpDown";
 import { PreviousRullingType } from "@/queries/useGetPreviousRulings";
 import { toast } from "sonner";
 
@@ -55,7 +55,6 @@ export const useVoteMutation = (
       incrementPositiveVote(itemId, selectedVote),
     ...options,
     onMutate: async ({ itemId, selectedVote }) => {
-      console.log("onMutate", itemId, selectedVote);
       await queryClient.cancelQueries({
         queryKey: ["previousRullings"],
       });
